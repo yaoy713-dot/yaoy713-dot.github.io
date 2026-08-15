@@ -5,118 +5,105 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lockbox">
 <meta name="theme-color" content="#0b0f14">
 <title>Lockbox Spinner</title>
 <style>
   :root{
-    --bg:#0b0f14;
-    --panel:#131a23;
-    --panel-2:#18212c;
-    --line:#243040;
-    --text:#e7edf5;
-    --muted:#8b9bb0;
-    --accent:#f5a524;
-    --accent-dim:#7a5514;
-    --good:#2fbf71;
-    --bad:#e0574a;
-    --radius:16px;
+    --bg:#0b0f14; --panel:#131a23; --panel-2:#18212c; --line:#243040;
+    --text:#e7edf5; --muted:#8b9bb0; --accent:#f5a524; --accent-dim:#7a5514;
+    --good:#2fbf71; --good-dim:#1f5c3b; --bad:#e0574a; --radius:16px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   body{
-    background:var(--bg);
-    color:var(--text);
+    background:var(--bg); color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.45;
-    padding:20px 16px calc(40px + env(safe-area-inset-bottom));
-    max-width:520px;
-    margin:0 auto;
+    line-height:1.45; max-width:540px; margin:0 auto;
+    padding:calc(18px + env(safe-area-inset-top)) 16px calc(44px + env(safe-area-inset-bottom));
   }
-  h1{font-size:19px;margin:0;letter-spacing:.2px}
-  .sub{color:var(--muted);font-size:13px;margin-top:2px}
-  header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
-  .rangebadge{
-    background:var(--panel);border:1px solid var(--line);border-radius:12px;
-    padding:8px 12px;text-align:center;flex-shrink:0;
-  }
-  .rangebadge .r{font-size:17px;font-weight:700;color:var(--accent);letter-spacing:.5px}
-  .rangebadge .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+  h1{font-size:clamp(16px,4.6vw,19px);margin:0;letter-spacing:.2px}
+  .sub{color:var(--muted);font-size:clamp(11px,3.2vw,13px);margin-top:2px}
+  .headright{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .rangebadge{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:7px 11px;text-align:center}
+  .rangebadge .r{font-size:clamp(14px,4.4vw,17px);font-weight:700;color:var(--accent);white-space:nowrap}
+  .rangebadge .l{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+  .gear{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;font-size:17px;color:var(--muted);padding:0}
 
-  .card{
-    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-    padding:22px 18px;margin-bottom:14px;
-  }
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px 18px;margin-bottom:14px}
   .stage{text-align:center}
-  .dial{
-    font-size:76px;font-weight:800;line-height:1;letter-spacing:-2px;
-    font-variant-numeric:tabular-nums;
-    background:linear-gradient(180deg,#fff,#c9d6e6);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    margin:6px 0 2px;
-  }
+  .dial{font-size:clamp(48px,17vw,76px);font-weight:800;line-height:1.05;letter-spacing:-2px;
+    font-variant-numeric:tabular-nums;margin:4px 0 2px;
+    background:linear-gradient(180deg,#fff,#c9d6e6);-webkit-background-clip:text;background-clip:text;color:transparent}
   .dial.rolling{background:linear-gradient(180deg,var(--accent),#c07d10);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .dial-label{color:var(--muted);font-size:13px;min-height:19px}
+  .dial-label{color:var(--muted);font-size:clamp(12px,3.4vw,13.5px);min-height:19px}
+  .lockglyph{font-size:clamp(40px,13vw,58px);line-height:1.1;margin:8px 0 4px}
+  .bigline{font-size:clamp(19px,5.6vw,25px);font-weight:700;margin:2px 0 4px;letter-spacing:-.3px}
 
-  button{font-family:inherit;font-size:15px;border-radius:12px;border:1px solid var(--line);
-    background:var(--panel-2);color:var(--text);padding:12px 16px;cursor:pointer;transition:.15s}
+  button{font-family:inherit;font-size:clamp(14px,3.9vw,15px);border-radius:12px;border:1px solid var(--line);
+    background:var(--panel-2);color:var(--text);padding:12px 16px;min-height:44px;cursor:pointer;transition:.15s}
   button:active{transform:scale(.985)}
-  button:disabled{opacity:.4;cursor:default}
-  .primary{
-    width:100%;margin-top:16px;padding:18px;font-size:18px;font-weight:700;letter-spacing:.4px;
-    background:linear-gradient(180deg,#f7b23f,#e0921a);color:#20160a;border:none;
-  }
+  button:disabled{opacity:.45;cursor:default}
+  .primary{width:100%;margin-top:18px;padding:18px;font-size:clamp(16px,4.8vw,18px);font-weight:700;letter-spacing:.4px;
+    background:linear-gradient(180deg,#f7b23f,#e0921a);color:#20160a;border:none;min-height:56px}
   .primary:disabled{background:var(--panel-2);color:var(--muted);border:1px solid var(--line);opacity:1}
+  .primary.go{background:linear-gradient(180deg,#3fd189,#1fa561);color:#07200f}
+  .primary.test{background:linear-gradient(180deg,#8fb4ff,#5a82d6);color:#0b1424}
   .ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
-  .row{display:flex;gap:8px}
+  .ghost.warn{color:#f0cf94;border-color:#5c4514}
+  .ghost.danger{color:var(--bad);border-color:#5c2620}
+  .row{display:flex;gap:8px;margin-top:8px}
   .row>button{flex:1}
-
-  .count{font-size:44px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1px;margin:10px 0 2px}
-  .bar{height:6px;background:#0e141c;border-radius:99px;overflow:hidden;margin:16px 0 8px;border:1px solid var(--line)}
-  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));width:0}
-  .unlocked .count{color:var(--good)}
+  .spacer{height:34px}
 
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
     border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
-  .stat{background:var(--panel);padding:14px 8px;text-align:center}
-  .stat b{display:block;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
-  .stat span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  @media (max-width:340px){ .stats{grid-template-columns:repeat(2,1fr)} }
+  .stat{background:var(--panel);padding:13px 6px;text-align:center}
+  .stat b{display:block;font-size:clamp(16px,5vw,20px);font-weight:700;font-variant-numeric:tabular-nums}
+  .stat span{font-size:clamp(9px,2.7vw,10.5px);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;
+    display:block;overflow-wrap:anywhere}
 
-  h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);
-    margin:22px 0 10px;font-weight:600}
+  h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:22px 0 10px;font-weight:600}
   .log{list-style:none;margin:0;padding:0}
-  .log li{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--panel);
-    border:1px solid var(--line);border-radius:12px;margin-bottom:7px}
-  .log .n{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;min-width:36px;text-align:center}
+  .log li{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;margin-bottom:7px;min-height:56px;cursor:pointer}
+  .log li.open{border-color:var(--accent-dim)}
+  .log .n{font-size:clamp(17px,5vw,20px);font-weight:800;font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
   .log .meta{flex:1;min-width:0}
-  .log .meta .t{font-size:13.5px}
-  .log .meta .d{font-size:11.5px;color:var(--muted)}
-  .tag{font-size:10px;text-transform:uppercase;letter-spacing:.6px;padding:3px 8px;border-radius:99px;
+  .log .meta .t{font-size:clamp(12px,3.5vw,13.5px);overflow-wrap:anywhere}
+  .log .meta .d{font-size:clamp(10.5px,3vw,11.5px);color:var(--muted)}
+  .tag{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;padding:3px 7px;border-radius:99px;
     border:1px solid var(--line);color:var(--muted);white-space:nowrap}
-  .tag.done{color:var(--good);border-color:#1f5c3b}
+  .tag.done{color:var(--good);border-color:var(--good-dim)}
   .tag.live{color:var(--accent);border-color:var(--accent-dim)}
   .tag.quit{color:var(--bad);border-color:#5c2620}
+  .rowactions{display:flex;gap:6px;margin:-3px 0 9px;padding:0 2px}
+  .rowactions button{flex:1;font-size:12px;padding:9px 4px;min-height:44px}
 
-  .empty{color:var(--muted);font-size:13.5px;text-align:center;padding:18px;
-    border:1px dashed var(--line);border-radius:12px}
+  .empty{color:var(--muted);font-size:13.5px;text-align:center;padding:18px;border:1px dashed var(--line);border-radius:12px}
 
-  details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 14px;margin-top:22px}
-  details summary{cursor:pointer;padding:13px 0;font-size:13.5px;color:var(--muted);list-style:none}
-  details summary::-webkit-details-marker{display:none}
-  details summary::before{content:"⚙  "}
-  details[open] summary{border-bottom:1px solid var(--line);margin-bottom:14px}
-  .settings-body{padding-bottom:16px}
-  label.check{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);margin-bottom:14px}
-  input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
-  .note{font-size:12px;color:var(--muted);margin-top:10px}
-  .danger{color:var(--bad);border-color:#5c2620}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:14px}
+  .panel h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+  label.check{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);margin-bottom:14px;
+    padding:8px 0;min-height:44px}
+  input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex-shrink:0;margin-top:1px}
+  input[type=number],textarea{width:100%;background:#0e141c;border:1px solid var(--line);color:var(--text);
+    border-radius:10px;padding:12px;font-size:15px;font-family:inherit;min-height:44px}
+  textarea{min-height:120px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.35}
+  .note{font-size:12px;color:var(--muted);margin:10px 0 0}
 
-  .banner{background:#2a2110;border:1px solid #5c4514;color:#f0cf94;font-size:13px;
-    padding:11px 14px;border-radius:12px;margin-bottom:14px}
+  .banner{border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:clamp(12px,3.4vw,13px);
+    background:#2a2110;border:1px solid #5c4514;color:#f0cf94}
   .banner.alarm{background:#2b1512;border-color:#7a2f26;color:#ffbcb2}
-  .banner b{display:block;margin-bottom:3px;font-size:13.5px}
+  .banner b{display:block;margin-bottom:3px}
+  .banner button{margin-top:9px;width:100%}
+
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
     background:#f0f4fa;color:#0b0f14;font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:99px;
-    opacity:0;pointer-events:none;transition:.22s;z-index:20;max-width:88vw;text-align:center}
+    opacity:0;pointer-events:none;transition:.22s;z-index:30;max-width:88vw;text-align:center}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .hide{display:none !important}
 </style>
@@ -126,38 +113,60 @@
 <header>
   <div>
     <h1>Lockbox Spinner</h1>
-    <div class="sub" id="subline">Spin for your lock-away hours</div>
+    <div class="sub" id="subline">Draw your hours</div>
   </div>
-  <div class="rangebadge">
-    <div class="r" id="rangeText">1–10</div>
-    <div class="l">Range</div>
+  <div class="headright">
+    <div class="rangebadge"><div class="r" id="rangeText">1–10</div><div class="l">Range</div></div>
+    <button class="gear" id="gearBtn" aria-label="Settings and backup">⚙</button>
   </div>
 </header>
 
-<div id="storageWarn" class="banner alarm hide">
-  <b>Nothing is being saved here.</b>
-  This window can't store data, so your spins will vanish when you close it. Open the file in a real browser (Chrome, Safari, Firefox) instead of a file preview.
+<div id="corruptBanner" class="banner alarm hide">
+  <b>Your saved data looks damaged.</b>
+  Nothing has been overwritten. Copy the text below somewhere safe before you do anything else.
+  <button class="ghost" id="showCorrupt">Show the raw data</button>
+  <textarea id="corruptText" class="hide" readonly style="margin-top:10px"></textarea>
 </div>
 
-<div id="backupBanner" class="banner hide"></div>
+<div id="storageWarn" class="banner alarm hide">
+  <b id="storageWarnTitle">Nothing is being saved.</b>
+  <span id="storageWarnBody">This window can't store data, so your spins will vanish. Open the site in Safari or Chrome rather than a file preview.</span>
+  <button class="ghost" id="storageEscape">Copy my data out</button>
+</div>
 
-<!-- IDLE / SPIN -->
-<section class="card stage" id="spinCard">
+<div id="backupBanner" class="banner hide">
+  <b>Time to back up.</b>
+  <span id="backupBannerBody"></span>
+  <button class="ghost warn" id="bannerBackup">Back up now</button>
+</div>
+
+<!-- IDLE -->
+<section class="card stage hide" id="spinCard">
   <div class="dial" id="dial">?</div>
   <div class="dial-label" id="dialLabel">Tap spin to draw your hours</div>
   <button class="primary" id="spinBtn">SPIN</button>
 </section>
 
-<!-- ACTIVE LOCK -->
+<!-- LOCKED -->
 <section class="card stage hide" id="lockCard">
-  <div class="dial-label" id="lockHeadline">Locked away</div>
-  <div class="count" id="countdown">--:--:--</div>
-  <div class="dial-label" id="unlockAtText"></div>
-  <div class="bar"><i id="progress"></i></div>
-  <button class="primary" id="completeBtn" disabled>LOCKED</button>
-  <div class="row" style="margin-top:8px">
-    <button class="ghost" id="abandonBtn">Opened it early</button>
-  </div>
+  <div class="lockglyph" id="lockGlyph">🔒</div>
+  <div class="bigline" id="lockHeadline">Locked away</div>
+  <div class="dial-label" id="lockSub">Go do something else.</div>
+  <button class="primary go hide" id="closeoutBtn">I GOT IT BACK</button>
+  <div class="spacer" id="lockSpacer"></div>
+  <div class="row"><button class="ghost" id="revealBtn">Show me the time</button></div>
+  <div class="row hide" id="undoRow"><button class="ghost" id="undoBtn">Undo — I haven't locked it yet</button></div>
+  <div class="row hide" id="earlyRow"><button class="ghost danger" id="earlyBtn">I opened it early</button></div>
+</section>
+
+<!-- JUST FINISHED -->
+<section class="card stage hide" id="doneCard">
+  <div class="lockglyph">✅</div>
+  <div class="bigline" id="doneHeadline">Lock complete</div>
+  <div class="dial-label" id="doneSub"></div>
+  <div class="spacer"></div>
+  <div class="spacer"></div>
+  <div class="row"><button class="ghost" id="doneBtn">Back</button></div>
 </section>
 
 <div class="stats">
@@ -172,25 +181,47 @@
 <h2>History <span id="logCount"></span></h2>
 <ul class="log" id="log"></ul>
 <div class="empty hide" id="logEmpty">No spins yet. Your first draw is 1–10 hours.</div>
+<div class="row hide" id="showAllRow"><button class="ghost" id="showAllBtn">Show all</button></div>
 
-<details>
-  <summary>Settings &amp; backup</summary>
-  <div class="settings-body">
-    <label class="check">
-      <input type="checkbox" id="testMode">
-      <span>Test mode — 1 hour becomes 10 seconds. Test spins are tagged and never change your max or stats.</span>
-    </label>
-    <div class="row">
-      <button class="ghost" id="exportBtn">Save backup</button>
-      <button class="ghost" id="importBtn">Restore backup</button>
-    </div>
-    <input type="file" id="importFile" accept="application/json,.json" class="hide">
-    <p class="note">Your history lives in this browser only. Save a backup now and then — it downloads a small file you can keep in your photos, Files app, or email to yourself.</p>
-    <div class="row" style="margin-top:14px">
-      <button class="ghost danger" id="resetBtn">Erase everything</button>
-    </div>
+<!-- SETTINGS -->
+<section class="panel hide" id="settings">
+  <h3>Backup</h3>
+  <div class="row" style="margin-top:0">
+    <button class="ghost warn" id="backupBtn">Back up now</button>
+    <button class="ghost" id="restoreBtn">Restore</button>
   </div>
-</details>
+  <p class="note" id="backupStatus"></p>
+
+  <div id="backupPane" class="hide" style="margin-top:14px">
+    <textarea id="backupText" readonly></textarea>
+    <div class="row"><button class="ghost" id="copyBtn">Copy</button><button class="ghost" id="shareBtn">Share / Save to Files</button></div>
+    <p class="note">Paste it into Notes, or send it to yourself. Then confirm below — I won't claim you're backed up until you say so.</p>
+    <div class="row"><button class="ghost warn" id="confirmedBackup">Yes, I saved it</button><button class="ghost" id="cancelBackup">Close</button></div>
+  </div>
+
+  <div id="restorePane" class="hide" style="margin-top:14px">
+    <textarea id="restoreText" placeholder="Paste a backup here…"></textarea>
+    <div class="row"><button class="ghost" id="restorePasteBtn">Restore from text</button><button class="ghost" id="restoreFileBtn">Choose a file</button></div>
+    <input type="file" id="importFile" accept="application/json,.json,text/plain" class="hide">
+    <div class="row"><button class="ghost" id="cancelRestore">Close</button></div>
+  </div>
+
+  <h3 style="margin-top:20px">Max</h3>
+  <div class="row" style="margin-top:0">
+    <input type="number" id="maxInput" min="1" max="9999" inputmode="numeric">
+    <button class="ghost" id="setMaxBtn" style="flex:0 0 auto;padding:12px 18px">Set</button>
+  </div>
+  <p class="note">Normally this climbs by 1 each time you complete a lock. Setting it by hand skips the training — useful after a data loss or a new phone.</p>
+
+  <h3 style="margin-top:20px">Test mode</h3>
+  <label class="check">
+    <input type="checkbox" id="testMode">
+    <span>1 hour becomes 10 seconds, so you can see the whole cycle. Test spins never change your max or stats, and this switches itself off when you reopen the app.</span>
+  </label>
+
+  <h3 style="margin-top:20px">Danger</h3>
+  <div class="row" style="margin-top:0"><button class="ghost danger" id="resetBtn">Erase everything</button></div>
+</section>
 
 <div class="toast" id="toast"></div>
 
@@ -198,116 +229,243 @@
 (function(){
   "use strict";
 
-  /* ---------- storage ---------- */
   var KEY = "lockboxSpinner.v1";
-  var HOUR_MS = 3600 * 1000;
-  var TEST_MS = 10 * 1000;
+  var PREV = "lockboxSpinner.prev";
+  var HOUR_MS = 3600000;
+  var TEST_MS = 10000;
+  var UNDO_MS = 60000;
+  var BACKUP_DAYS = 5;
 
-  function blank(){ return { max: 10, entries: [], lastBackup: null }; }
+  var $ = function(id){ return document.getElementById(id); };
+  var now = function(){ return Date.now(); };
 
-  // Some file previews (iOS Quick Look, in-app viewers) render the page but throw
-  // away anything written to storage. Probe it up front so the user is told loudly
-  // instead of losing a week of history without noticing.
-  var storageWorks = (function(){
-    try {
-      var probe = "__lb_probe__";
-      localStorage.setItem(probe, "1");
-      var back = localStorage.getItem(probe);
-      localStorage.removeItem(probe);
-      return back === "1";
-    } catch (e) { return false; }
-  })();
+  /* ================= state ================= */
 
-  function load(){
-    try {
-      var raw = localStorage.getItem(KEY);
-      if (!raw) return blank();
-      var p = JSON.parse(raw);
-      return {
-        max: (typeof p.max === "number" && p.max >= 10) ? p.max : 10,
-        entries: Array.isArray(p.entries) ? p.entries : [],
-        lastBackup: p.lastBackup || null
-      };
-    } catch (e) { return blank(); }
+  function blank(){ return { v:2, baseMax:10, entries:[], deleted:[], lastBackup:null, updatedAt:0 }; }
+
+  var state = blank();
+  var corruptRaw = null;     // non-null => refuse all writes
+  var storageWorks = true;
+  var storageMsg = "";
+  var revealUntil = 0;
+  var revealTimer = null;
+  var expandedId = null;
+  var showAll = false;
+  var view = "spin";         // spin | lock | done
+  var doneInfo = null;
+  var rolling = false;
+
+  function validEntry(e){
+    return e && typeof e === "object"
+      && typeof e.id === "string"
+      && typeof e.roll === "number" && isFinite(e.roll) && e.roll >= 1 && e.roll <= 100000
+      && typeof e.spunAt === "number" && isFinite(e.spunAt) && e.spunAt > 0
+      && typeof e.unlockAt === "number" && isFinite(e.unlockAt)
+      && (e.status === "active" || e.status === "completed" || e.status === "abandoned");
   }
 
-  var state = load();
-  var storageOk = true;
+  function normalise(raw){
+    // Accepts v1 or v2 shapes. Returns a clean state, or null if unusable.
+    if (!raw || typeof raw !== "object") return null;
+    if (!Array.isArray(raw.entries)) return null;
+
+    var entries = [];
+    for (var i = 0; i < raw.entries.length; i++) {
+      var e = raw.entries[i];
+      if (!validEntry(e)) continue;
+      var roll = Math.round(e.roll);
+      // Clock-skew repair: a lock can never be longer than the hours drawn.
+      var span = roll * (e.test ? TEST_MS : HOUR_MS);
+      var unlock = e.unlockAt;
+      if (unlock < e.spunAt || unlock - e.spunAt > span * 1.05) unlock = e.spunAt + span;
+      entries.push({
+        id: e.id, roll: roll,
+        maxAtSpin: (typeof e.maxAtSpin === "number" && isFinite(e.maxAtSpin)) ? Math.round(e.maxAtSpin) : roll,
+        spunAt: e.spunAt, unlockAt: unlock, status: e.status,
+        endedAt: (typeof e.endedAt === "number" && isFinite(e.endedAt)) ? e.endedAt : undefined,
+        test: !!e.test
+      });
+    }
+    entries.sort(function(a,b){ return a.spunAt - b.spunAt; });
+
+    var deleted = Array.isArray(raw.deleted) ? raw.deleted.filter(function(x){ return typeof x === "string"; }) : [];
+    var doneCount = 0;
+    for (var j = 0; j < entries.length; j++) if (!entries[j].test && entries[j].status === "completed") doneCount++;
+
+    var base;
+    if (typeof raw.baseMax === "number" && isFinite(raw.baseMax)) base = Math.round(raw.baseMax);
+    else if (typeof raw.max === "number" && isFinite(raw.max)) base = Math.round(raw.max) - doneCount;  // v1 migration
+    else base = 10;
+    if (!(base >= 1)) base = 1;
+    if (base > 9999) base = 9999;
+
+    return {
+      v:2, baseMax: base, entries: entries, deleted: deleted,
+      lastBackup: (typeof raw.lastBackup === "number" && isFinite(raw.lastBackup)) ? raw.lastBackup : null,
+      updatedAt: (typeof raw.updatedAt === "number" && isFinite(raw.updatedAt)) ? raw.updatedAt : 0
+    };
+  }
+
+  function maxOf(st){
+    var d = 0;
+    for (var i = 0; i < st.entries.length; i++) {
+      var e = st.entries[i];
+      if (!e.test && e.status === "completed") d++;
+    }
+    var m = st.baseMax + d;
+    return m < 1 ? 1 : (m > 9999 ? 9999 : m);
+  }
+  function currentMax(){ return maxOf(state); }
+
+  /* ================= storage ================= */
+
+  function rawGet(k){ try { return localStorage.getItem(k); } catch (e) { return undefined; } }
+  function rawSet(k, v){ try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+
+  function readDisk(){
+    var raw = rawGet(KEY);
+    if (raw === undefined) return { unavailable:true };
+    if (raw === null) return { empty:true };
+    var parsed;
+    try { parsed = JSON.parse(raw); } catch (e) { return { corrupt:raw }; }
+    var st = normalise(parsed);
+    if (!st) return { corrupt:raw };
+    return { state:st };
+  }
+
+  function finality(s){ return s === "active" ? 0 : 1; }
+
+  function merge(a, b){
+    // b (memory) is authoritative for scalar fields when it is newer.
+    if (!a) return b;
+    var by = {}, i, e, prev;
+    function absorb(list){
+      for (i = 0; i < list.length; i++) {
+        e = list[i]; prev = by[e.id];
+        if (!prev) { by[e.id] = e; continue; }
+        if (finality(e.status) > finality(prev.status)) by[e.id] = e;
+        else if (finality(e.status) === finality(prev.status) && (e.endedAt || 0) > (prev.endedAt || 0)) by[e.id] = e;
+      }
+    }
+    absorb(a.entries); absorb(b.entries);
+    var tomb = {}, all = a.deleted.concat(b.deleted);
+    for (i = 0; i < all.length; i++) tomb[all[i]] = 1;
+    var entries = [];
+    for (var k in by) if (Object.prototype.hasOwnProperty.call(by, k) && !tomb[k]) entries.push(by[k]);
+    entries.sort(function(x,y){ return x.spunAt - y.spunAt; });
+    var newer = (b.updatedAt >= a.updatedAt) ? b : a;
+    return {
+      v:2, baseMax: newer.baseMax, entries: entries, deleted: Object.keys(tomb),
+      lastBackup: Math.max(a.lastBackup || 0, b.lastBackup || 0) || null,
+      updatedAt: Math.max(a.updatedAt, b.updatedAt)
+    };
+  }
 
   function save(){
-    try { localStorage.setItem(KEY, JSON.stringify(state)); }
-    catch (e) {
-      if (storageOk) { storageOk = false; toast("Can't save here — private browsing?"); }
+    if (corruptRaw !== null) { setStorageBroken("Saving is paused until the damaged data above is dealt with."); return false; }
+    state.updatedAt = now();
+    var disk = readDisk();
+    if (disk.unavailable) { setStorageBroken("This browser won't let the page store anything."); return false; }
+    if (disk.corrupt) { enterCorrupt(disk.corrupt); return false; }
+    if (disk.state) {
+      var prevRaw = rawGet(KEY);
+      if (typeof prevRaw === "string") rawSet(PREV, prevRaw);
+      state = merge(disk.state, state);
     }
+    if (state.deleted.length > 500) state.deleted = state.deleted.slice(-500);
+    var payload = JSON.stringify(state);
+    if (!rawSet(KEY, payload)) { setStorageBroken("The browser refused to save — storage may be full."); return false; }
+    if (rawGet(KEY) !== payload) { setStorageBroken("The save didn't stick when read back."); return false; }
+    if (!storageWorks) { storageWorks = true; storageMsg = ""; }
+    return true;
   }
 
-  /* ---------- helpers ---------- */
-  var $ = function(id){ return document.getElementById(id); };
+  function setStorageBroken(msg){ storageWorks = false; storageMsg = msg; renderBanners(); }
+
+  function enterCorrupt(raw){
+    corruptRaw = raw;
+    var stamp = KEY + ".damaged." + now();
+    rawSet(stamp, raw);
+    renderBanners();
+  }
+
+  function boot(){
+    var disk = readDisk();
+    if (disk.unavailable) { state = blank(); setStorageBroken("This browser won't let the page store anything."); return; }
+    if (disk.corrupt) { state = blank(); enterCorrupt(disk.corrupt); return; }
+    if (disk.empty) { state = blank(); save(); return; }
+    state = disk.state;
+    var repaired = JSON.stringify(state);
+    if (rawGet(KEY) !== repaired) save();   // persist any clock-skew / migration repair
+  }
+
+  /* ================= helpers ================= */
 
   function active(){
-    for (var i = 0; i < state.entries.length; i++) {
-      if (state.entries[i].status === "active") return state.entries[i];
-    }
+    for (var i = 0; i < state.entries.length; i++) if (state.entries[i].status === "active") return state.entries[i];
     return null;
   }
-  function real(e){ return !e.test; }
+  function isDue(e){ return e && now() >= e.unlockAt; }
   function pad(n){ return n < 10 ? "0" + n : "" + n; }
 
-  function fmtLeft(ms){
-    if (ms < 0) ms = 0;
-    var s = Math.floor(ms / 1000);
-    var h = Math.floor(s / 3600); s -= h * 3600;
-    var m = Math.floor(s / 60); s -= m * 60;
-    return h + ":" + pad(m) + ":" + pad(s);
+  function clockText(ts){
+    var d = new Date(ts), t = new Date();
+    var time = d.toLocaleTimeString([], { hour:"numeric", minute:"2-digit" });
+    if (d.toDateString() === t.toDateString()) return time;
+    var tm = new Date(t.getTime() + 86400000);
+    if (d.toDateString() === tm.toDateString()) return "tomorrow " + time;
+    return d.toLocaleDateString([], { weekday:"short" }) + " " + time;
   }
-  function fmtClock(ts){
+  function dateText(ts){
     var d = new Date(ts);
-    var today = new Date();
-    var sameDay = d.toDateString() === today.toDateString();
-    var time = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-    return sameDay ? time : d.toLocaleDateString([], { month: "short", day: "numeric" }) + " " + time;
+    return d.toLocaleDateString([], { month:"short", day:"numeric" }) + ", " +
+           d.toLocaleTimeString([], { hour:"numeric", minute:"2-digit" });
   }
-  function fmtDate(ts){
-    var d = new Date(ts);
-    return d.toLocaleDateString([], { month: "short", day: "numeric" }) + ", " +
-           d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  function roughLeft(ms){
+    if (ms <= 0) return "any moment";
+    var m = Math.round(ms / 60000);
+    if (m < 60) return "about " + m + " min";
+    var h = Math.floor(m / 60), r = m % 60;
+    if (h < 24) return "about " + h + "h" + (r >= 15 && r < 45 ? "½" : "");
+    return "about " + Math.floor(h / 24) + "d " + (h % 24) + "h";
   }
+  function roughAgo(ms){
+    var m = Math.round(ms / 60000);
+    if (m < 60) return m + " min ago";
+    var h = Math.round(m / 60);
+    if (h < 36) return h + (h === 1 ? " hour ago" : " hours ago");
+    return Math.round(h / 24) + " days ago";
+  }
+  function hrs(n){ return n + (n === 1 ? " hour" : " hours"); }
 
   var toastTimer;
   function toast(msg){
-    var t = $("toast");
-    t.textContent = msg;
-    t.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
+    var t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2800);
   }
 
-  /* ---------- stats ---------- */
   function stats(){
-    var done = 0, hours = 0, longest = 0, streak = 0, best = 0, run = 0;
+    var done = 0, hours = 0, longest = 0, best = 0, run = 0;
     for (var i = 0; i < state.entries.length; i++) {
       var e = state.entries[i];
-      if (!real(e) || e.status === "active") continue;
+      if (e.test || e.status === "active") continue;
       if (e.status === "completed") {
         done++; hours += e.roll;
         if (e.roll > longest) longest = e.roll;
-        run++;
-        if (run > best) best = run;
-      } else {
-        run = 0;
-      }
+        run++; if (run > best) best = run;
+      } else run = 0;
     }
-    streak = run;
-    return { done: done, hours: hours, longest: longest, streak: streak, best: best };
+    return { done:done, hours:hours, longest:longest, streak:run, best:best };
   }
 
-  /* ---------- render ---------- */
+  /* ================= render ================= */
+
   function render(){
     var a = active();
+    if (view !== "done") view = a ? "lock" : "spin";
 
-    $("rangeText").textContent = "1–" + state.max;
-    $("sMax").textContent = state.max;
-
+    $("rangeText").textContent = "1–" + currentMax();
+    $("sMax").textContent = currentMax();
     var s = stats();
     $("sDone").textContent = s.done;
     $("sHours").textContent = s.hours + "h";
@@ -315,15 +473,52 @@
     $("sBest").textContent = s.best;
     $("sLongest").textContent = s.longest + "h";
 
-    $("spinCard").classList.toggle("hide", !!a);
-    $("lockCard").classList.toggle("hide", !a);
-    $("subline").textContent = a
-      ? "Lock is running"
-      : "Spin for your lock-away hours";
+    $("spinCard").classList.toggle("hide", view !== "spin");
+    $("lockCard").classList.toggle("hide", view !== "lock");
+    $("doneCard").classList.toggle("hide", view !== "done");
+
+    $("subline").textContent = view === "done" ? "Nicely done"
+      : (a ? (isDue(a) ? "Ready to close out" : "Locked") : "Draw your hours");
+
+    $("spinBtn").disabled = (!storageWorks || corruptRaw !== null);
+    $("spinBtn").classList.toggle("test", $("testMode").checked);
+    $("spinBtn").textContent = $("testMode").checked ? "SPIN (TEST)" : "SPIN";
+
+    if (a) renderLock(a);
+    if (view === "done" && doneInfo) {
+      $("doneHeadline").textContent = doneInfo.test ? "Test finished" : "Lock complete";
+      $("doneSub").textContent = doneInfo.test
+        ? "Nothing recorded — that was a test."
+        : hrs(doneInfo.roll) + " served. Your next draw is 1–" + currentMax() + ".";
+    }
 
     renderLog();
-    renderBanner();
-    tick();
+    renderBanners();
+    $("maxInput").value = currentMax();
+  }
+
+  function renderLock(a){
+    var due = isDue(a);
+    var fresh = (now() - a.spunAt) < UNDO_MS;
+    var revealed = now() < revealUntil;
+
+    $("lockGlyph").textContent = due ? "🔓" : "🔒";
+    $("lockHeadline").textContent = due ? "Time's up" : (a.test ? "Locked away (test)" : "Locked away");
+
+    if (due) {
+      $("lockSub").textContent = "Opened " + roughAgo(now() - a.unlockAt) + ". Close it out when you have your things back.";
+    } else if (revealed) {
+      $("lockSub").textContent = hrs(a.roll) + " drawn · " + roughLeft(a.unlockAt - now()) + " left · opens " + clockText(a.unlockAt);
+    } else {
+      $("lockSub").textContent = "Go do something else.";
+    }
+
+    $("closeoutBtn").classList.toggle("hide", !due);
+    $("lockSpacer").classList.toggle("hide", due);
+    $("revealBtn").parentNode.classList.toggle("hide", due);
+    $("revealBtn").textContent = revealed ? "Hide it again" : "Show me the time";
+    $("undoRow").classList.toggle("hide", due || !fresh);
+    $("earlyRow").classList.toggle("hide", due || fresh);
   }
 
   function renderLog(){
@@ -333,23 +528,26 @@
     $("logEmpty").classList.toggle("hide", list.length > 0);
     $("logCount").textContent = list.length ? "· " + list.length : "";
 
-    for (var i = 0; i < list.length; i++) {
+    var limit = showAll ? list.length : 10;
+    $("showAllRow").classList.toggle("hide", list.length <= 10);
+    $("showAllBtn").textContent = showAll ? "Show fewer" : "Show all " + list.length;
+
+    for (var i = 0; i < Math.min(limit, list.length); i++) {
       var e = list[i];
       var li = document.createElement("li");
+      li.className = expandedId === e.id ? "open" : "";
+      li.setAttribute("data-id", e.id);
 
       var n = document.createElement("div");
-      n.className = "n";
-      n.textContent = e.roll;
+      n.className = "n"; n.textContent = e.roll;
 
       var meta = document.createElement("div");
       meta.className = "meta";
       var t = document.createElement("div");
       t.className = "t";
-      var unit = e.test ? (e.roll === 1 ? " test hr" : " test hrs") : (e.roll === 1 ? " hour" : " hours");
-      t.textContent = e.roll + unit + " · rolled out of " + e.maxAtSpin;
+      t.textContent = (e.test ? e.roll + " test" : hrs(e.roll)) + " · drawn from 1–" + e.maxAtSpin;
       var d = document.createElement("div");
-      d.className = "d";
-      d.textContent = fmtDate(e.spunAt);
+      d.className = "d"; d.textContent = dateText(e.spunAt);
       meta.appendChild(t); meta.appendChild(d);
 
       var tag = document.createElement("div");
@@ -359,128 +557,163 @@
 
       li.appendChild(n); li.appendChild(meta); li.appendChild(tag);
       ul.appendChild(li);
+
+      if (expandedId === e.id) ul.appendChild(rowActions(e));
     }
   }
 
-  function renderBanner(){
-    $("storageWarn").classList.toggle("hide", storageWorks);
+  function rowActions(e){
+    var wrap = document.createElement("div");
+    wrap.className = "rowactions";
+    function btn(label, cls, fn){
+      var b = document.createElement("button");
+      b.className = "ghost" + (cls ? " " + cls : "");
+      b.textContent = label;
+      b.addEventListener("click", function(ev){ ev.stopPropagation(); fn(); });
+      wrap.appendChild(b);
+    }
+    if (e.status !== "active") {
+      if (e.status !== "completed") btn("Mark done", "", function(){ setStatus(e.id, "completed"); });
+      if (e.status !== "abandoned") btn("Mark early", "", function(){ setStatus(e.id, "abandoned"); });
+    }
+    btn("Delete", "danger", function(){ removeEntry(e.id); });
+    return wrap;
+  }
 
-    var b = $("backupBanner");
-    if (!storageWorks) { b.classList.add("hide"); return; }
+  function renderBanners(){
+    $("corruptBanner").classList.toggle("hide", corruptRaw === null);
+    if (corruptRaw !== null) $("corruptText").value = corruptRaw;
+
+    var broken = !storageWorks;
+    $("storageWarn").classList.toggle("hide", !broken);
+    if (broken) {
+      $("storageWarnTitle").textContent = "Nothing is being saved.";
+      $("storageWarnBody").textContent = storageMsg + " Copy your data out now — anything you do from here will be lost.";
+    }
+
     var finished = 0;
-    for (var i = 0; i < state.entries.length; i++) {
-      if (state.entries[i].status !== "active") finished++;
-    }
-    var stale = !state.lastBackup || (Date.now() - state.lastBackup > 14 * 24 * HOUR_MS);
-    if (finished >= 3 && stale) {
-      b.textContent = "You have " + finished + " spins saved and no recent backup. Open Settings below and tap Save backup.";
-      b.classList.remove("hide");
-    } else {
-      b.classList.add("hide");
-    }
-  }
-
-  /* ---------- countdown ---------- */
-  function tick(){
-    var a = active();
-    if (!a) return;
-    var now = Date.now();
-    var total = a.unlockAt - a.spunAt;
-    var left = a.unlockAt - now;
-    var pct = total > 0 ? Math.min(100, Math.max(0, ((now - a.spunAt) / total) * 100)) : 100;
-
-    $("progress").style.width = pct + "%";
-    $("unlockAtText").textContent = "Opens at " + fmtClock(a.unlockAt) +
-      "  ·  " + a.roll + (a.roll === 1 ? " hour" : " hours") + " drawn" + (a.test ? " (test)" : "");
-
-    if (left > 0) {
-      $("lockCard").classList.remove("unlocked");
-      $("lockHeadline").textContent = a.test ? "Test lock running" : "Locked away";
-      $("countdown").textContent = fmtLeft(left);
-      $("completeBtn").disabled = true;
-      $("completeBtn").textContent = "LOCKED";
-    } else {
-      $("lockCard").classList.add("unlocked");
-      $("lockHeadline").textContent = "Time served";
-      $("countdown").textContent = "0:00:00";
-      $("completeBtn").disabled = false;
-      $("completeBtn").textContent = a.test ? "FINISH TEST" : "I MADE IT — MAX +1";
+    for (var i = 0; i < state.entries.length; i++) if (state.entries[i].status !== "active") finished++;
+    var stale = !state.lastBackup || (now() - state.lastBackup > BACKUP_DAYS * 24 * HOUR_MS);
+    var show = finished >= 1 && stale && corruptRaw === null;
+    $("backupBanner").classList.toggle("hide", !show);
+    if (show) {
+      $("backupBannerBody").textContent = state.lastBackup
+        ? "It's been over " + BACKUP_DAYS + " days. Safari can clear a site's data if you don't open it for a week."
+        : "You have " + finished + " spin" + (finished === 1 ? "" : "s") + " recorded and no backup yet.";
     }
   }
-  setInterval(tick, 1000);
 
-  /* ---------- actions ---------- */
-  var rolling = false;
+  /* ================= actions ================= */
 
   function spin(){
-    if (rolling || active()) return;
+    if (rolling || active() || corruptRaw !== null || !storageWorks) return;
     rolling = true;
     $("spinBtn").disabled = true;
 
     var isTest = $("testMode").checked;
-    var result = 1 + Math.floor(Math.random() * state.max);
+    var maxAt = currentMax();
+    var result = 1 + Math.floor(Math.random() * maxAt);
     var dial = $("dial");
     dial.classList.add("rolling");
     $("dialLabel").textContent = "Drawing…";
 
-    var start = Date.now();
-    var dur = 1400;
+    var start = now(), dur = 1400;
     var timer = setInterval(function(){
-      var p = (Date.now() - start) / dur;
-      if (p >= 1) {
-        clearInterval(timer);
-        dial.textContent = result;
-        dial.classList.remove("rolling");
-        $("dialLabel").textContent = result + (result === 1 ? " hour" : " hours") + " — starting now";
-        commit(result, isTest);
-        rolling = false;
+      if (now() - start < dur) { dial.textContent = 1 + Math.floor(Math.random() * maxAt); return; }
+      clearInterval(timer);
+      dial.textContent = result;
+      dial.classList.remove("rolling");
+      rolling = false;
+      // Re-check: state may have changed during the animation (restore, reset, other tab).
+      if (active() || corruptRaw !== null || currentMax() !== maxAt) {
+        $("dialLabel").textContent = "Spin cancelled — something changed.";
         $("spinBtn").disabled = false;
+        render();
         return;
       }
-      dial.textContent = 1 + Math.floor(Math.random() * state.max);
+      commit(result, isTest, maxAt);
+      view = "lock";
+      $("spinBtn").disabled = false;
+      render();
     }, 60);
   }
 
-  function commit(roll, isTest){
-    var now = Date.now();
+  function commit(roll, isTest, maxAt){
+    var t = now();
     state.entries.push({
-      id: now + "-" + Math.random().toString(36).slice(2, 7),
-      roll: roll,
-      maxAtSpin: state.max,
-      spunAt: now,
-      unlockAt: now + roll * (isTest ? TEST_MS : HOUR_MS),
-      status: "active",
-      test: !!isTest
+      id: t + "-" + Math.random().toString(36).slice(2, 8),
+      roll: roll, maxAtSpin: maxAt, spunAt: t,
+      unlockAt: t + roll * (isTest ? TEST_MS : HOUR_MS),
+      status: "active", test: !!isTest
     });
     save();
-    setTimeout(render, 900);
   }
 
-  function complete(){
+  function closeout(){
     var a = active();
-    if (!a || Date.now() < a.unlockAt) return;
-    a.status = "completed";
-    a.endedAt = Date.now();
-    if (real(a)) {
-      state.max += 1;
-      toast("Lock complete. Next spin is 1–" + state.max + ".");
-    } else {
-      toast("Test finished. Nothing recorded.");
-    }
+    if (!a || !isDue(a)) return;
+    a.status = "completed"; a.endedAt = now();
     save();
+    doneInfo = { roll:a.roll, test:a.test };
+    view = "done";
     resetDial();
     render();
+    if (!a.test) toast("Next draw is 1–" + currentMax() + ".");
   }
 
-  function abandon(){
+  function undoSpin(){
+    var a = active();
+    if (!a || isDue(a)) return;
+    if (!confirm("Delete this spin completely? Use this only if you haven't actually locked anything away.")) return;
+    removeEntry(a.id, true);
+    resetDial();
+    toast("Spin removed");
+  }
+
+  function openedEarly(){
     var a = active();
     if (!a) return;
-    if (!confirm("Opened the box early? This is logged as an early open and your max stays at " + state.max + ".")) return;
-    a.status = "abandoned";
-    a.endedAt = Date.now();
-    save();
-    resetDial();
-    render();
+    var s = stats();
+    var warn = "Log this as opening the box early?\n\nYour max stays at " + currentMax() + ".";
+    if (s.streak > 0) warn += "\nIt also ends your streak of " + s.streak + ".";
+    if (!confirm(warn)) return;
+    a.status = "abandoned"; a.endedAt = now();
+    save(); resetDial(); view = "spin"; render();
+  }
+
+  function setStatus(id, status){
+    for (var i = 0; i < state.entries.length; i++) {
+      if (state.entries[i].id === id) {
+        state.entries[i].status = status;
+        state.entries[i].endedAt = state.entries[i].endedAt || now();
+        break;
+      }
+    }
+    expandedId = null;
+    save(); render();
+    toast("Updated — max is now 1–" + currentMax());
+  }
+
+  function removeEntry(id, silent){
+    if (!silent && !confirm("Delete this entry? Your max will be recalculated without it.")) return;
+    var keep = [];
+    for (var i = 0; i < state.entries.length; i++) if (state.entries[i].id !== id) keep.push(state.entries[i]);
+    state.entries = keep;
+    if (state.deleted.indexOf(id) === -1) state.deleted.push(id);
+    expandedId = null;
+    view = active() ? "lock" : "spin";
+    save(); render();
+    if (!silent) toast("Deleted — max is now 1–" + currentMax());
+  }
+
+  function setMaxManually(){
+    var want = parseInt($("maxInput").value, 10);
+    if (!isFinite(want) || want < 1 || want > 9999) { toast("Pick a number between 1 and 9999"); return; }
+    if (want === currentMax()) { toast("Already there"); return; }
+    if (!confirm("Set your max to " + want + "? This overrides what you've earned.")) return;
+    state.baseMax += (want - currentMax());
+    save(); render();
+    toast("Max set to 1–" + currentMax());
   }
 
   function resetDial(){
@@ -488,70 +721,216 @@
     $("dialLabel").textContent = "Tap spin to draw your hours";
   }
 
-  /* ---------- backup ---------- */
-  function exportData(){
-    state.lastBackup = Date.now();
-    save();
-    var payload = JSON.stringify(state, null, 2);
-    var blob = new Blob([payload], { type: "application/json" });
-    var url = URL.createObjectURL(blob);
+  function hardReset(){
+    if (!confirm("Erase all " + state.entries.length + " spins and reset your max to 10?")) return;
+    if (!confirm("Last check — this cannot be undone. Back up first if you're unsure.")) return;
+    var ids = [];
+    for (var i = 0; i < state.entries.length; i++) ids.push(state.entries[i].id);
+    state = { v:2, baseMax:10, entries:[], deleted: state.deleted.concat(ids), lastBackup:state.lastBackup, updatedAt:now() };
+    save(); resetDial(); view = "spin"; render();
+    toast("Wiped clean");
+  }
+
+  /* ================= backup ================= */
+
+  function payload(){ return JSON.stringify(state, null, 2); }
+  function stamp(){
     var d = new Date();
-    var name = "lockbox-backup-" + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + ".json";
+    return d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate()) + "-" + pad(d.getHours()) + pad(d.getMinutes());
+  }
+
+  function openBackup(){
+    $("settings").classList.remove("hide");
+    $("restorePane").classList.add("hide");
+    $("backupPane").classList.remove("hide");
+    $("backupText").value = payload();
+    $("backupPane").scrollIntoView({ behavior:"smooth", block:"center" });
+  }
+
+  function copyBackup(){
+    var ta = $("backupText");
+    ta.removeAttribute("readonly"); ta.select(); ta.setSelectionRange(0, 999999);
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    ta.setAttribute("readonly", "readonly");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ta.value).then(function(){ toast("Copied — now paste it somewhere safe"); },
+        function(){ if (!ok) toast("Couldn't copy — select the text and copy by hand"); });
+    } else {
+      toast(ok ? "Copied — now paste it somewhere safe" : "Select the text and copy by hand");
+    }
+  }
+
+  function shareBackup(){
+    var name = "lockbox-backup-" + stamp() + ".json";
+    var text = payload();
+    try {
+      if (navigator.canShare && window.File) {
+        var file = new File([text], name, { type:"application/json" });
+        if (navigator.canShare({ files:[file] })) {
+          navigator.share({ files:[file], title:"Lockbox backup" })
+            .then(function(){ toast("Sent to the share sheet"); })
+            .catch(function(){});
+          return;
+        }
+      }
+      if (navigator.share) { navigator.share({ title:"Lockbox backup", text:text }).catch(function(){}); return; }
+    } catch (e) {}
+    var blob = new Blob([text], { type:"application/json" });
+    var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
     a.href = url; a.download = name;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
-    toast("Backup saved");
-    renderBanner();
+    toast("Tried to download it — check Files");
   }
 
-  function importData(file){
-    var reader = new FileReader();
-    reader.onload = function(){
-      try {
-        var p = JSON.parse(String(reader.result));
-        if (typeof p.max !== "number" || !Array.isArray(p.entries)) throw new Error("bad file");
-        if (!confirm("Replace what's here with the backup? It has " + p.entries.length + " spins and a max of " + p.max + ".")) return;
-        state = { max: p.max, entries: p.entries, lastBackup: p.lastBackup || null };
-        save(); resetDial(); render();
-        toast("Backup restored");
-      } catch (e) {
-        toast("That file didn't look like a backup");
-      }
-    };
-    reader.readAsText(file);
+  function confirmBackup(){
+    state.lastBackup = now();
+    save();
+    $("backupPane").classList.add("hide");
+    render();
+    toast("Noted — backed up");
   }
 
-  function hardReset(){
-    if (!confirm("Erase all spins and set the max back to 10?")) return;
-    if (!confirm("Last check — this cannot be undone.")) return;
-    state = blank();
-    save(); resetDial(); render();
-    toast("Wiped clean");
+  function openRestore(){
+    $("settings").classList.remove("hide");
+    $("backupPane").classList.add("hide");
+    $("restorePane").classList.remove("hide");
+    $("restoreText").value = "";
+    $("restorePane").scrollIntoView({ behavior:"smooth", block:"center" });
   }
 
-  /* ---------- wiring ---------- */
+  function applyRestore(text){
+    var parsed;
+    try { parsed = JSON.parse(text); } catch (e) { toast("That isn't a backup — check you copied all of it"); return; }
+    var cand = normalise(parsed);
+    if (!cand) { toast("That backup is missing its spin list"); return; }
+    if (!cand.entries.length && state.entries.length) {
+      if (!confirm("That backup is empty. Replacing would delete all " + state.entries.length + " of your spins. Continue?")) return;
+    }
+    var msg = "Replace your current " + state.entries.length + " spins (max " + currentMax() + ")\n" +
+              "with this backup's " + cand.entries.length + " spins (max " + maxOf(cand) + ")?";
+    if (cand.entries.length < state.entries.length) msg += "\n\nThis backup has FEWER spins than you have now.";
+    if (!confirm(msg)) return;
+
+    var before = rawGet(KEY);
+    if (typeof before === "string") rawSet(PREV, before);
+
+    // A restored lock that already elapsed was never actually served.
+    for (var i = 0; i < cand.entries.length; i++) {
+      var e = cand.entries[i];
+      if (e.status === "active" && now() >= e.unlockAt) { e.status = "abandoned"; e.endedAt = now(); }
+    }
+    cand.updatedAt = now();
+    cand.deleted = [];
+    state = cand;
+    var out = JSON.stringify(state);
+    if (!rawSet(KEY, out) || rawGet(KEY) !== out) { setStorageBroken("Restore couldn't be written."); return; }
+    expandedId = null; showAll = false; view = active() ? "lock" : "spin";
+    resetDial(); render();
+    toast("Restored " + state.entries.length + " spins");
+  }
+
+  /* ================= wiring ================= */
+
   $("spinBtn").addEventListener("click", spin);
-  $("completeBtn").addEventListener("click", complete);
-  $("abandonBtn").addEventListener("click", abandon);
-  $("exportBtn").addEventListener("click", exportData);
-  $("resetBtn").addEventListener("click", hardReset);
-  $("importBtn").addEventListener("click", function(){ $("importFile").click(); });
-  $("importFile").addEventListener("change", function(e){
-    if (e.target.files && e.target.files[0]) importData(e.target.files[0]);
-    e.target.value = "";
-  });
-  document.addEventListener("visibilitychange", function(){ if (!document.hidden) tick(); });
+  $("closeoutBtn").addEventListener("click", closeout);
+  $("undoBtn").addEventListener("click", undoSpin);
+  $("earlyBtn").addEventListener("click", openedEarly);
+  $("doneBtn").addEventListener("click", function(){ view = "spin"; doneInfo = null; render(); });
 
+  $("revealBtn").addEventListener("click", function(){
+    clearTimeout(revealTimer);
+    if (now() < revealUntil) { revealUntil = 0; render(); return; }
+    revealUntil = now() + 12000;
+    render();
+    revealTimer = setTimeout(function(){ revealUntil = 0; render(); }, 12000);
+  });
+
+  $("gearBtn").addEventListener("click", function(){
+    var s = $("settings");
+    s.classList.toggle("hide");
+    if (!s.classList.contains("hide")) s.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+
+  $("log").addEventListener("click", function(ev){
+    var li = ev.target.closest ? ev.target.closest("li[data-id]") : null;
+    if (!li) return;
+    var id = li.getAttribute("data-id");
+    expandedId = (expandedId === id) ? null : id;
+    renderLog();
+  });
+  $("showAllBtn").addEventListener("click", function(){ showAll = !showAll; renderLog(); });
+
+  $("backupBtn").addEventListener("click", openBackup);
+  $("bannerBackup").addEventListener("click", openBackup);
+  $("copyBtn").addEventListener("click", copyBackup);
+  $("shareBtn").addEventListener("click", shareBackup);
+  $("confirmedBackup").addEventListener("click", confirmBackup);
+  $("cancelBackup").addEventListener("click", function(){ $("backupPane").classList.add("hide"); });
+  $("restoreBtn").addEventListener("click", openRestore);
+  $("cancelRestore").addEventListener("click", function(){ $("restorePane").classList.add("hide"); });
+  $("restorePasteBtn").addEventListener("click", function(){
+    var t = $("restoreText").value.trim();
+    if (!t) { toast("Paste your backup into the box first"); return; }
+    applyRestore(t);
+  });
+  $("restoreFileBtn").addEventListener("click", function(){ $("importFile").click(); });
+  $("importFile").addEventListener("change", function(ev){
+    var f = ev.target.files && ev.target.files[0];
+    ev.target.value = "";
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function(){ applyRestore(String(r.result)); };
+    r.onerror = function(){ toast("Couldn't read that file"); };
+    r.readAsText(f);
+  });
+
+  $("setMaxBtn").addEventListener("click", setMaxManually);
+  $("resetBtn").addEventListener("click", hardReset);
+  $("testMode").addEventListener("change", render);
+  $("showCorrupt").addEventListener("click", function(){ $("corruptText").classList.toggle("hide"); });
+  $("storageEscape").addEventListener("click", openBackup);
+
+  // Another tab wrote: pull it in rather than clobbering it.
+  window.addEventListener("storage", function(ev){
+    if (ev.key && ev.key !== KEY) return;
+    var disk = readDisk();
+    if (disk.state) { state = merge(disk.state, state); render(); }
+  });
+
+  function resync(){
+    if (corruptRaw !== null) return;
+    var disk = readDisk();
+    if (disk.state) state = merge(disk.state, state);
+    render();
+  }
+  document.addEventListener("visibilitychange", function(){ if (!document.hidden) resync(); });
+  window.addEventListener("focus", resync);
+  window.addEventListener("pageshow", resync);
+
+  // No ticking clock. Just notice, quietly, when a lock comes due.
+  var lastDue = null;
+  setInterval(function(){
+    var a = active();
+    var d = a ? isDue(a) : null;
+    if (d !== lastDue) { lastDue = d; render(); }
+    else if (a && !isDue(a) && now() - a.spunAt < UNDO_MS + 2000) render();
+  }, 5000);
+
+  boot();
+  $("testMode").checked = false;
   render();
 
-  // exposed for automated testing only
   window.__lockbox = {
     get state(){ return state; },
-    spin: spin,
-    complete: complete,
-    commit: commit,
-    render: render
+    get view(){ return view; },
+    max: currentMax, stats: stats, spin: spin, closeout: closeout,
+    commit: commit, render: render, save: save, applyRestore: applyRestore,
+    removeEntry: removeEntry, setStatus: setStatus,
+    get storageWorks(){ return storageWorks; },
+    get corrupt(){ return corruptRaw; }
   };
 })();
 </script>
